@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App identity -->
+    <string name="app_name">YPI</string>
+    <string name="app_display_name">YPI</string>
+    <string name="app_tagline">Your Privacy Indicator</string>
+    <string name="by_author">by M YOUNUS</string>
+
+    <!-- AccessibilityService metadata (shown in Android Settings) -->
+    <string name="accessibility_service_label">YPI Privacy Indicator</string>
+    <string name="accessibility_service_description">
+        Shows small colored icons at the top of the screen for camera, microphone,
+        audio, network, Bluetooth, and location activity. No screen content is read
+        or transmitted. Zero internet. 100% local.
+    </string>
+
+    <!-- Onboarding steps -->
+    <string name="step1_title">Draw Over Other Apps</string>
+    <string name="step1_desc">Needed for the indicator to float above all apps</string>
+    <string name="step2_title">Enable Accessibility Service</string>
+    <string name="step2_desc">Keeps the indicator visible in full-screen games and system UI</string>
+    <string name="step3_title">Allow Usage Access</string>
+    <string name="step3_desc">Optional — labels which app was active, and measures real per-app WiFi usage</string>
+    <string name="step4_title">Allow Bluetooth Access</string>
+    <string name="step4_desc">Needed to detect when a Bluetooth device connects (Android 12+)</string>
+    <string name="step5_title">Allow Location Access</string>
+    <string name="step5_desc">Needed to detect active GPS use. Only watches the GPS radio — never reads your actual coordinates</string>
+
+    <!-- Buttons -->
+    <string name="grant">Grant</string>
+    <string name="granted">Granted ✓</string>
+    <string name="enable">Enable</string>
+    <string name="enabled">Enabled ✓</string>
+
+    <!-- Status banner -->
+    <string name="status_active">● INDICATOR ACTIVE</string>
+    <string name="status_incomplete">○ SETUP INCOMPLETE</string>
+
+    <!-- Indicator legend -->
+    <string name="legend_title">What each icon means</string>
+    <string name="legend_camera">Camera in use</string>
+    <string name="legend_mic">Microphone active</string>
+    <string name="legend_audio">Audio playing</string>
+    <string name="legend_network">Network active — WiFi or mobile data</string>
+    <string name="legend_bluetooth">Bluetooth device connected</string>
+    <string name="legend_location">GPS actively acquiring a fix</string>
+
+    <!-- Activity log -->
+    <string name="log_title">Activity Log</string>
+    <string name="log_empty">No sensor activity logged yet</string>
+    <string name="clear_log">Clear Log</string>
+    <string name="auto_delete_after">Auto-delete after</string>
+    <string name="retention_1_month">1 month</string>
+    <string name="retention_3_months">3 months</string>
+    <string name="retention_6_months">6 months</string>
+    <string name="usage_access_title">App labels need Usage Access</string>
+    <string name="usage_access_desc">Grant Usage Access so YPI can show which app was active, and measure real per-app WiFi usage. Without it, entries show as "Unknown app." This is a local, on-device permission — no data ever leaves your phone.</string>
+    <string name="filter_label">Filter</string>
+    <string name="filter_all">All</string>
+
+    <!-- Bottom navigation -->
+    <string name="nav_home">Home</string>
+    <string name="nav_logs">Logs</string>
+    <string name="nav_settings">Settings</string>
+
+    <!-- Settings screen -->
+    <string name="settings_permissions_heading">Permissions</string>
+    <string name="settings_data_heading">Data</string>
+    <string name="settings_about_heading">About</string>
+    <string name="about_version">Version 1.0.0 · Open source</string>
+
+    <!-- Home: setup-progress nudge -->
+    <string name="setup_progress_count">%1$d of %2$d permissions set up</string>
+    <string name="setup_progress_desc">Finish setup for the most accurate log attribution</string>
+    <string name="go_to_settings">Settings</string>
+</resources>

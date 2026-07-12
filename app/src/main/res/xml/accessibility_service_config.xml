@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Minimal AccessibilityService footprint for YPI.
+
+    accessibilityEventTypes = typeWindowStateChanged → the lowest-frequency
+    real event type available (fires only on app/window switches). There is
+    no valid "none" flag for this attribute, so this is the cheapest option
+    that still compiles. onAccessibilityEvent() is a no-op in the service,
+    so received events are discarded immediately with no processing cost.
+
+    canRetrieveWindowContent = false     → We do NOT read any screen content.
+    canPerformGestures = false           → We do NOT inject touch or gestures.
+
+    The service exists SOLELY to obtain TYPE_ACCESSIBILITY_OVERLAY
+    window z-order, which appears above ALL apps including full-screen games.
+-->
+<accessibility-service
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:accessibilityEventTypes="typeWindowStateChanged"
+    android:accessibilityFeedbackType="feedbackGeneric"
+    android:accessibilityFlags="flagDefault"
+    android:canPerformGestures="false"
+    android:canRetrieveWindowContent="false"
+    android:description="@string/accessibility_service_description"
+    android:notificationTimeout="0"
+    android:settingsActivity=".MainActivity" />

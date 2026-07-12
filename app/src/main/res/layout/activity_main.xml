@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="?attr/colorSurface">
+
+    <!-- ══ Scrollable content ════════════════════════════════════ -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:overScrollMode="never">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="24dp"
+            android:paddingBottom="24dp">
+
+            <!-- ── Header ────────────────────────────────────── -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:paddingTop="40dp"
+                android:paddingBottom="28dp">
+
+                <!-- Live-style preview of what the floating overlay shows -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="20dp">
+
+                    <TextView android:layout_width="30dp" android:layout_height="30dp" android:gravity="center" android:textSize="18sp" android:text="📷" />
+                    <TextView android:layout_width="30dp" android:layout_height="30dp" android:gravity="center" android:textSize="18sp" android:text="🎤" />
+                    <TextView android:layout_width="30dp" android:layout_height="30dp" android:gravity="center" android:textSize="18sp" android:text="🔊" />
+                    <TextView android:layout_width="30dp" android:layout_height="30dp" android:gravity="center" android:textSize="18sp" android:text="📶" />
+                    <TextView android:layout_width="30dp" android:layout_height="30dp" android:gravity="center" android:textSize="18sp" android:text="🎧" />
+                    <TextView android:layout_width="30dp" android:layout_height="30dp" android:gravity="center" android:textSize="18sp" android:text="📍" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/app_display_name"
+                    android:textAppearance="?attr/textAppearanceDisplaySmall"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.10"
+                    android:textColor="?attr/colorOnSurface" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/app_tagline"
+                    android:textAppearance="?attr/textAppearanceBodyLarge"
+                    android:textColor="?attr/colorOnSurfaceVariant"
+                    android:layout_marginTop="5dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/by_author"
+                    android:textAppearance="?attr/textAppearanceLabelSmall"
+                    android:textColor="?attr/colorOutline"
+                    android:layout_marginTop="3dp" />
+
+            </LinearLayout>
+
+            <!-- ── Status banner ──────────────────────────────── -->
+            <LinearLayout
+                android:id="@+id/statusBanner"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:background="@drawable/shape_rounded_16"
+                android:layout_marginBottom="12dp">
+
+                <TextView
+                    android:id="@+id/tvStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textAppearance="?attr/textAppearanceLabelLarge"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.07" />
+
+            </LinearLayout>
+
+            <!-- ── Setup progress (only visible if something's missing) ── -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardSetupProgress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="0dp"
+                app:strokeColor="?attr/colorOutlineVariant"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="16dp"
+                    android:gravity="center_vertical">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvSetupProgress"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?attr/textAppearanceTitleSmall"
+                            android:textColor="?attr/colorOnSurface" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/setup_progress_desc"
+                            android:textAppearance="?attr/textAppearanceBodySmall"
+                            android:textColor="?attr/colorOnSurfaceVariant"
+                            android:layout_marginTop="2dp" />
+
+                    </LinearLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnGoToSettings"
+                        style="@style/Widget.Material3.Button.TonalButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/go_to_settings"
+                        android:textSize="13sp" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ── Indicator legend ──────────────────────────── -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="0dp"
+                app:strokeColor="?attr/colorOutlineVariant"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/legend_title"
+                        android:textAppearance="?attr/textAppearanceTitleSmall"
+                        android:textColor="?attr/colorOnSurface"
+                        android:layout_marginBottom="14dp" />
+
+                    <!-- Camera row -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="12dp">
+                        <FrameLayout android:layout_width="34dp" android:layout_height="34dp">
+                            <View android:layout_width="match_parent" android:layout_height="match_parent" android:background="@drawable/shape_circle" android:backgroundTint="@color/color_camera" android:alpha="0.14" />
+                            <TextView android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center" android:textSize="16sp" android:text="📷" />
+                        </FrameLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/legend_camera"
+                            android:textAppearance="?attr/textAppearanceBodyMedium"
+                            android:textColor="?attr/colorOnSurface"
+                            android:layout_marginStart="12dp" />
+                    </LinearLayout>
+
+                    <!-- Microphone row -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="12dp">
+                        <FrameLayout android:layout_width="34dp" android:layout_height="34dp">
+                            <View android:layout_width="match_parent" android:layout_height="match_parent" android:background="@drawable/shape_circle" android:backgroundTint="@color/color_mic" android:alpha="0.14" />
+                            <TextView android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center" android:textSize="16sp" android:text="🎤" />
+                        </FrameLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/legend_mic"
+                            android:textAppearance="?attr/textAppearanceBodyMedium"
+                            android:textColor="?attr/colorOnSurface"
+                            android:layout_marginStart="12dp" />
+                    </LinearLayout>
+
+                    <!-- Audio row -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="12dp">
+                        <FrameLayout android:layout_width="34dp" android:layout_height="34dp">
+                            <View android:layout_width="match_parent" android:layout_height="match_parent" android:background="@drawable/shape_circle" android:backgroundTint="@color/color_audio" android:alpha="0.14" />
+                            <TextView android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center" android:textSize="16sp" android:text="🔊" />
+                        </FrameLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/legend_audio"
+                            android:textAppearance="?attr/textAppearanceBodyMedium"
+                            android:textColor="?attr/colorOnSurface"
+                            android:layout_marginStart="12dp" />
+                    </LinearLayout>
+
+                    <!-- Network row -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="12dp">
+                        <FrameLayout android:layout_width="34dp" android:layout_height="34dp">
+                            <View android:layout_width="match_parent" android:layout_height="match_parent" android:background="@drawable/shape_circle" android:backgroundTint="@color/color_network" android:alpha="0.14" />
+                            <TextView android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center" android:textSize="16sp" android:text="📶" />
+                        </FrameLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/legend_network"
+                            android:textAppearance="?attr/textAppearanceBodyMedium"
+                            android:textColor="?attr/colorOnSurface"
+                            android:layout_marginStart="12dp" />
+                    </LinearLayout>
+
+                    <!-- Bluetooth row -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="12dp">
+                        <FrameLayout android:layout_width="34dp" android:layout_height="34dp">
+                            <View android:layout_width="match_parent" android:layout_height="match_parent" android:background="@drawable/shape_circle" android:backgroundTint="@color/color_bluetooth" android:alpha="0.14" />
+                            <TextView android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center" android:textSize="16sp" android:text="🎧" />
+                        </FrameLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/legend_bluetooth"
+                            android:textAppearance="?attr/textAppearanceBodyMedium"
+                            android:textColor="?attr/colorOnSurface"
+                            android:layout_marginStart="12dp" />
+                    </LinearLayout>
+
+                    <!-- Location row -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+                        <FrameLayout android:layout_width="34dp" android:layout_height="34dp">
+                            <View android:layout_width="match_parent" android:layout_height="match_parent" android:background="@drawable/shape_circle" android:backgroundTint="@color/color_location" android:alpha="0.14" />
+                            <TextView android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center" android:textSize="16sp" android:text="📍" />
+                        </FrameLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/legend_location"
+                            android:textAppearance="?attr/textAppearanceBodyMedium"
+                            android:textColor="?attr/colorOnSurface"
+                            android:layout_marginStart="12dp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?attr/colorOutlineVariant" />
+
+    <include
+        android:id="@+id/bottomNavInclude"
+        layout="@layout/bottom_nav_bar" />
+
+</LinearLayout>

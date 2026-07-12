@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- ── Sensor Indicator Colors ──────────────────────────────── -->
+    <!-- Must stay in sync with SensorType.kt's hardcoded hex values -->
+    <color name="color_camera">#34C759</color>      <!-- Green  · Camera    -->
+    <color name="color_mic">#FF9500</color>          <!-- Orange · Mic       -->
+    <color name="color_audio">#007AFF</color>        <!-- Blue   · Audio     -->
+    <color name="color_network">#AF52DE</color>      <!-- Purple · Network   -->
+    <color name="color_bluetooth">#00BFA5</color>     <!-- Teal   · Bluetooth -->
+    <color name="color_location">#FF3B30</color>      <!-- Red    · Location  -->
+    <color name="color_inactive">#636366</color>      <!-- Gray   · Service off -->
+
+    <!-- ── App Icon ─────────────────────────────────────────────── -->
+    <color name="ic_launcher_background">#0D0D1A</color>
+
+    <!-- ── Utility ──────────────────────────────────────────────── -->
+    <color name="white">#FFFFFF</color>
+</resources>

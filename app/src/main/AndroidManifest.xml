@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!--
+    ╔══════════════════════════════════════════════════════════════╗
+    ║  YPI – YOUR PRIVACY INDICATOR  ·  by MNM YOUNUS             ║
+    ║  Open-source privacy utility   ·  Zero Internet Policy      ║
+    ╚══════════════════════════════════════════════════════════════╝
+
+    NOTE: android.permission.INTERNET is intentionally ABSENT.
+    This app is 100% offline. No data ever leaves the device.
+    -->
+
+    <!-- Required for WindowManager TYPE_ACCESSIBILITY_OVERLAY -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
+    <!-- Normal permission (auto-granted, no prompt) — lets NetworkMonitor
+         read the current transport (WiFi/Mobile) via ConnectivityManager. -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-- Bluetooth: dual declaration for the ACL connect/disconnect broadcast.
+         Pre-31 devices only need the normal BLUETOOTH permission (no prompt).
+         API 31+ requires BLUETOOTH_CONNECT, a real runtime permission with
+         its own system dialog — requested from MainActivity's Step 4. -->
+    <uses-permission android:name="android.permission.BLUETOOTH" android:maxSdkVersion="30" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+
+    <!-- Location: a real runtime permission with its own system dialog,
+         requested from MainActivity's Step 5. Used ONLY to register
+         LocationManager.registerGnssStatusCallback(), which reports
+         whether the GPS radio is actively acquiring a satellite fix
+         system-wide. YPI never requests location updates itself and
+         never reads coordinates — it only watches the GNSS chip's
+         on/off state. Detects GPS-based positioning only; apps using
+         pure WiFi/cell-tower positioning without GPS won't trigger it. -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <!-- Optional. Lets YPI label WHICH app was in the foreground when a
+         sensor activated (and gives genuine per-app WiFi attribution via
+         NetworkStatsManager), for the encrypted local activity log. This is
+         a "special access" permission the user grants manually via Settings
+         (Settings → Apps → Special access → Usage access) — never via
+         Internet, ADB, or root. Without it, log entries show as "Unknown
+         app" but every badge still works fully. -->
+    <uses-permission
+        android:name="android.permission.PACKAGE_USAGE_STATS"
+        tools:ignore="ProtectedPermissions" />
+
+    <application
+        android:allowBackup="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.YPI"
+        tools:targetApi="35">
+
+        <!-- ── Home (launcher) ──────────────────────────────────── -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- ── Encrypted Sensor Activity Log ───────────────────── -->
+        <activity
+            android:name=".LogsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <!-- ── Permissions + retention ──────────────────────────── -->
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <!-- ── Privacy Indicator Overlay Service ───────────────── -->
+        <!--
+            Uses TYPE_ACCESSIBILITY_OVERLAY so the badge row renders above
+            ALL windows: full-screen games, lock screen dialogs, etc.
+            onAccessibilityEvent() is a no-op — see accessibility_service_config.xml.
+        -->
+        <service
+            android:name=".PrivacyAccessibilityService"
+            android:exported="true"
+            android:label="@string/accessibility_service_label"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/accessibility_service_config" />
+        </service>
+
+    </application>
+</manifest>

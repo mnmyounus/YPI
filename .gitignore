@@ -1,0 +1,25 @@
+# Gradle
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!gradle/wrapper/gradle-wrapper.properties
+
+# Android Keystore — NEVER commit signing keys
+*.jks
+*.keystore
+keystore.properties
+
+# Local machine config
+local.properties
+
+# IDE / OS
+.idea/
+*.iml
+*.ipr
+*.iws
+.DS_Store
+Thumbs.db
+
+# Build outputs
+/app/release/
+/app/build/

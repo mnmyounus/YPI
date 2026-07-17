@@ -55,7 +55,7 @@ class PrivacyAccessibilityService : AccessibilityService() {
 
         // Overlay geometry — adjust to reposition the badge row
         private const val MARGIN_X_DP = 12   // from right screen edge
-        private const val MARGIN_Y_DP =  5   // from top  screen edge
+        private const val MARGIN_Y_DP =  2   // from top  screen edge
     }
 
     // ── Lifecycle ─────────────────────────────────────────────────

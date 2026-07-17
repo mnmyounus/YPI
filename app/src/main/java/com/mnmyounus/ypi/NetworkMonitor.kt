@@ -20,6 +20,14 @@ import android.os.Looper
  *     when the delta crosses a small threshold. Two integer reads every
  *     2 seconds; no per-app work happens here (see NetworkAppAttributor
  *     for that, which only runs on an activation transition, not on a loop).
+ *
+ * registerDefaultNetworkCallback is called WITH mainHandler explicitly.
+ * Without it, onCapabilitiesChanged()/onLost() fire on ConnectivityManager's
+ * own internal background thread, and this class calls straight into a
+ * View (invalidate() via the indicator) on every callback — a background
+ * thread touching a View throws CalledFromWrongThreadException. That
+ * callback fires exactly when the transport changes, so omitting the
+ * Handler here previously crashed the app on every WiFi ↔ mobile switch.
  */
 class NetworkMonitor(
     context: Context,
@@ -69,7 +77,7 @@ class NetworkMonitor(
     }
 
     fun start() {
-        cm.registerDefaultNetworkCallback(networkCallback)
+        cm.registerDefaultNetworkCallback(networkCallback, mainHandler)
         polling = true
         lastTotalBytes = -1L
         mainHandler.postDelayed(pollTick, POLL_INTERVAL_MS)

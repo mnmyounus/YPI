@@ -42,6 +42,9 @@ class InsightsActivity : AppCompatActivity() {
         b.btnGrantUsageAccess.setOnClickListener {
             startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS))
         }
+        b.btnOpenPermissionsInspector.setOnClickListener {
+            startActivity(Intent(this, PermissionsInspectorActivity::class.java))
+        }
 
         setUpBottomNav()
     }

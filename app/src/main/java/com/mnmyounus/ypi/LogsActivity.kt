@@ -5,9 +5,11 @@ import android.os.Bundle
 import android.provider.Settings
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.chip.Chip
 import com.mnmyounus.ypi.data.ForegroundAppResolver
+import com.mnmyounus.ypi.data.LogExporter
 import com.mnmyounus.ypi.data.SensorLogEntry
 import com.mnmyounus.ypi.data.SensorLogStore
 import com.mnmyounus.ypi.data.SensorType
@@ -19,7 +21,9 @@ import com.mnmyounus.ypi.databinding.ActivityLogsBinding
  * One of YPI's 4 bottom-nav destinations. Shows the encrypted, on-device
  * sensor activity log: which app was likely (or, for WiFi, genuinely
  * measured) responsible for each of the 6 sensors activating, and for
- * how long. Filterable by sensor type. Auto-delete retention lives in
+ * how long. Filterable by sensor type and searchable by app name. Export
+ * shares whatever's currently visible (both filters applied) as a local
+ * CSV via the system share sheet. Auto-delete retention lives in
  * Settings, not here — this screen is purely for browsing.
  */
 class LogsActivity : AppCompatActivity() {
@@ -30,6 +34,7 @@ class LogsActivity : AppCompatActivity() {
 
     private var allEntries: List<SensorLogEntry> = emptyList()
     private var activeFilter: SensorType? = null   // null = "All"
+    private var searchQuery: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +51,12 @@ class LogsActivity : AppCompatActivity() {
         b.btnClearLog.setOnClickListener {
             SensorLogStore.get(this).clearAll()
             allEntries = emptyList()
+            applyFilter()
+        }
+        b.btnExportLog.setOnClickListener { exportCurrentView() }
+
+        b.searchInput.doOnTextChanged { text, _, _, _ ->
+            searchQuery = text?.toString().orEmpty()
             applyFilter()
         }
 
@@ -80,13 +91,25 @@ class LogsActivity : AppCompatActivity() {
         b.filterChips.addView(chip)
     }
 
+    private var currentlyShown: List<SensorLogEntry> = emptyList()
+
     private fun applyFilter() {
-        val filtered = activeFilter
+        var filtered = activeFilter
             ?.let { type -> allEntries.filter { it.sensorType == type } }
             ?: allEntries
+        if (searchQuery.isNotBlank()) {
+            filtered = filtered.filter { it.appLabel.contains(searchQuery, ignoreCase = true) }
+        }
         val sorted = filtered.sortedByDescending { it.startMillis }
+        currentlyShown = sorted
         adapter.submit(sorted)
         b.emptyState.visibility = if (sorted.isEmpty()) View.VISIBLE else View.GONE
+    }
+
+    private fun exportCurrentView() {
+        if (currentlyShown.isEmpty()) return
+        val intent = LogExporter.buildShareIntent(this, currentlyShown)
+        startActivity(Intent.createChooser(intent, getString(R.string.export_log)))
     }
 
     // ── Data refresh ──────────────────────────────────────────────

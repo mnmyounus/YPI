@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Only the exports/ subfolder of cache is exposed — nothing else in
+         the app's storage is reachable through this provider. -->
+    <cache-path name="exports" path="exports/" />
+</paths>

@@ -1,8 +1,10 @@
 package com.mnmyounus.ypi
 
 import android.accessibilityservice.AccessibilityService
+import android.content.ComponentName
 import android.content.Intent
 import android.graphics.PixelFormat
+import android.service.quicksettings.TileService
 import android.view.Gravity
 import android.view.WindowManager
 import android.view.accessibility.AccessibilityEvent
@@ -28,7 +30,9 @@ import com.mnmyounus.ypi.data.SensorType
  * it is purely an overlay host and sensor bridge, not a screen reader.
  *
  * The static `isRunning` flag lets MainActivity reflect live status
- * without any IPC overhead.
+ * without any IPC overhead. `currentActive` similarly lets
+ * SensorStatusTileService (the Quick Settings tile) read live status
+ * without needing its own connection to any of the monitors.
  */
 class PrivacyAccessibilityService : AccessibilityService() {
 
@@ -52,6 +56,11 @@ class PrivacyAccessibilityService : AccessibilityService() {
     companion object {
         @Volatile
         var isRunning = false
+            private set
+
+        /** Read by SensorStatusTileService to show live status in the Quick Settings tile. */
+        @Volatile
+        var currentActive: Set<SensorType> = emptySet()
             private set
 
         // Overlay geometry — adjust to reposition the badge row
@@ -146,8 +155,17 @@ class PrivacyAccessibilityService : AccessibilityService() {
             if (bluetoothActive) add(SensorType.BLUETOOTH)
             if (locationActive) add(SensorType.LOCATION)
         }
+        currentActive = active
         indicatorView?.updateState(active)
         activityLogger?.onStateChanged(active)
+
+        // Nudges the OS to re-invoke the tile's onStartListening() if the
+        // Quick Settings shade is currently open, so it reflects this change
+        // immediately rather than only on next pull-down.
+        TileService.requestListeningState(
+            applicationContext,
+            ComponentName(this, SensorStatusTileService::class.java)
+        )
     }
 
     // ── Cleanup ───────────────────────────────────────────────────

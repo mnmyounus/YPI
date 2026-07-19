@@ -57,6 +57,20 @@
     <string name="usage_access_desc">Grant Usage Access so YPI can show which app was active, and measure real per-app WiFi usage. Without it, entries show as "Unknown app." This is a local, on-device permission — no data ever leaves your phone.</string>
     <string name="filter_label">Filter</string>
     <string name="filter_all">All</string>
+    <string name="search_hint">Search by app name</string>
+    <string name="export_log">Export</string>
+
+    <!-- Generic -->
+    <string name="view">View</string>
+
+    <!-- Permissions Inspector -->
+    <string name="permissions_inspector_title">Permissions Inspector</string>
+    <string name="permissions_inspector_desc">Which installed apps CAN access these — not who\'s using them right now, that\'s the live badges</string>
+    <string name="permissions_inspector_card_desc">See which installed apps can access your camera, mic, location, and more</string>
+
+    <!-- Quick Settings tile -->
+    <string name="tile_service_off">Service not running</string>
+    <string name="tile_none_active">No sensors active</string>
 
     <!-- Bottom navigation -->
     <string name="nav_home">Home</string>

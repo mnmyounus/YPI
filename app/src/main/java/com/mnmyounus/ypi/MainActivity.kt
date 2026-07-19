@@ -12,7 +12,7 @@ import com.mnmyounus.ypi.databinding.ActivityMainBinding
 /**
  * MainActivity — Home
  *
- * The launcher screen and first of YPI's 3 bottom-nav destinations.
+ * The launcher screen and first of YPI's 4 bottom-nav destinations.
  * Deliberately light: branding, the core active/inactive status banner
  * (gated only on overlay + accessibility service, same as always — the
  * other 3 permissions only improve log attribution, they don't affect
@@ -74,6 +74,7 @@ class MainActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.nav_home -> true
                 R.id.nav_logs -> { navigateTo(LogsActivity::class.java); true }
+                R.id.nav_insights -> { navigateTo(InsightsActivity::class.java); true }
                 R.id.nav_settings -> { navigateTo(SettingsActivity::class.java); true }
                 else -> false
             }

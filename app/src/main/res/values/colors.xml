@@ -12,6 +12,8 @@
 
     <!-- ── App Icon ─────────────────────────────────────────────── -->
     <color name="ic_launcher_background">#0D0D1A</color>
+    <color name="ic_launcher_stealth_background">#0A0A0A</color>
+    <color name="ic_launcher_minimal_background">#8E8E93</color>
 
     <!-- ── Utility ──────────────────────────────────────────────── -->
     <color name="white">#FFFFFF</color>

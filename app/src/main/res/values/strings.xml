@@ -61,13 +61,41 @@
     <!-- Bottom navigation -->
     <string name="nav_home">Home</string>
     <string name="nav_logs">Logs</string>
+    <string name="nav_insights">Insights</string>
     <string name="nav_settings">Settings</string>
 
     <!-- Settings screen -->
     <string name="settings_permissions_heading">Permissions</string>
+    <string name="settings_appearance_heading">Appearance</string>
     <string name="settings_data_heading">Data</string>
     <string name="settings_about_heading">About</string>
     <string name="about_version">Version 1.0.0 · Open source</string>
+
+    <!-- Settings: theme -->
+    <string name="settings_theme_title">Theme</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
+    <string name="theme_system">System</string>
+
+    <!-- Settings: app icon -->
+    <string name="settings_icon_title">App icon</string>
+    <string name="settings_icon_desc">Android only allows switching between a fixed set of pre-built icons, not an arbitrary custom image</string>
+    <string name="icon_default">Default</string>
+    <string name="icon_stealth">Stealth</string>
+    <string name="icon_minimal">Minimal</string>
+
+    <!-- Insights screen -->
+    <string name="insights_activity_heading">Your activity</string>
+    <string name="insights_app_opens">App opens</string>
+    <string name="insights_locks">Locked</string>
+    <string name="insights_unlocks">Unlocked</string>
+    <string name="insights_battery_heading">Battery</string>
+    <string name="insights_battery_charging">%1$s · Charging</string>
+    <string name="insights_battery_unknown">Unavailable</string>
+    <string name="insights_battery_note">Device-wide only — Android reserves true per-app battery breakdown for pre-installed system apps, a permission no sideloaded app (including this one) can be granted</string>
+    <string name="insights_data_heading">Data usage today</string>
+    <string name="insights_data_needs_usage_access">Grant Usage Access to see real per-app WiFi and mobile data totals for today.</string>
+    <string name="insights_data_empty">No measurable data usage yet today</string>
 
     <!-- Home: setup-progress nudge -->
     <string name="setup_progress_count">%1$d of %2$d permissions set up</string>

@@ -38,6 +38,7 @@ class PrivacyAccessibilityService : AccessibilityService() {
     private var networkMonitor:    NetworkMonitor?         = null
     private var bluetoothMonitor:  BluetoothMonitor?       = null
     private var locationMonitor:   LocationMonitor?        = null
+    private var screenLockMonitor: ScreenLockMonitor?      = null
     private var activityLogger:    SensorActivityLogger?  = null
 
     // Latest reading from each independent source — combined in publish()
@@ -88,6 +89,10 @@ class PrivacyAccessibilityService : AccessibilityService() {
             locationActive = active
             publish()
         }.also { it.start() }
+
+        // Doesn't feed publish()/the badge row at all — locking/unlocking
+        // isn't a "sensor." It just silently counts in the background.
+        screenLockMonitor = ScreenLockMonitor(this).also { it.start() }
     }
 
     override fun onUnbind(intent: Intent?): Boolean {
@@ -148,10 +153,11 @@ class PrivacyAccessibilityService : AccessibilityService() {
     // ── Cleanup ───────────────────────────────────────────────────
 
     private fun tearDown() {
-        sensorMonitor?.stop();    sensorMonitor = null
-        networkMonitor?.stop();   networkMonitor = null
-        bluetoothMonitor?.stop(); bluetoothMonitor = null
-        locationMonitor?.stop();  locationMonitor = null
+        sensorMonitor?.stop();     sensorMonitor = null
+        networkMonitor?.stop();    networkMonitor = null
+        bluetoothMonitor?.stop();  bluetoothMonitor = null
+        locationMonitor?.stop();   locationMonitor = null
+        screenLockMonitor?.stop(); screenLockMonitor = null
         activityLogger = null
 
         indicatorView?.let { v ->

@@ -48,26 +48,72 @@
         tools:ignore="ProtectedPermissions" />
 
     <application
+        android:name=".YpiApplication"
         android:allowBackup="false"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher_default"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher_default_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.YPI"
         tools:targetApi="35">
 
-        <!-- ── Home (launcher) ──────────────────────────────────── -->
+        <!-- ── Home (launcher target — no intent-filter of its own; see aliases below) ── -->
         <activity
             android:name=".MainActivity"
-            android:exported="true"
+            android:exported="false"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden">
+            android:windowSoftInputMode="stateHidden" />
+
+        <!--
+            Icon switching (Settings → App icon): Android has no API for a
+            third-party app to use an arbitrary runtime image as its own
+            launcher icon — a fixed, pre-declared set of aliases like this
+            is the only mechanism that exists. Exactly ONE is enabled at a
+            time; IconOption.kt flips which one via PackageManager at
+            runtime, and that's what actually changes the home-screen icon.
+        -->
+        <activity-alias
+            android:name=".MainActivityDefaultAlias"
+            android:targetActivity=".MainActivity"
+            android:enabled="true"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher_default"
+            android:roundIcon="@mipmap/ic_launcher_default_round"
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".MainActivityStealthAlias"
+            android:targetActivity=".MainActivity"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher_stealth"
+            android:roundIcon="@mipmap/ic_launcher_stealth_round"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".MainActivityMinimalAlias"
+            android:targetActivity=".MainActivity"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher_minimal"
+            android:roundIcon="@mipmap/ic_launcher_minimal_round"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
 
         <!-- ── Encrypted Sensor Activity Log ───────────────────── -->
         <activity
@@ -75,7 +121,13 @@
             android:exported="false"
             android:screenOrientation="portrait" />
 
-        <!-- ── Permissions + retention ──────────────────────────── -->
+        <!-- ── App-open/lock/unlock counters, battery, data usage ── -->
+        <activity
+            android:name=".InsightsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <!-- ── Permissions + retention + theme + icon ───────────── -->
         <activity
             android:name=".SettingsActivity"
             android:exported="false"

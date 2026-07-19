@@ -16,7 +16,7 @@ import com.mnmyounus.ypi.databinding.ActivityLogsBinding
 /**
  * LogsActivity
  *
- * One of YPI's 3 bottom-nav destinations. Shows the encrypted, on-device
+ * One of YPI's 4 bottom-nav destinations. Shows the encrypted, on-device
  * sensor activity log: which app was likely (or, for WiFi, genuinely
  * measured) responsible for each of the 6 sensors activating, and for
  * how long. Filterable by sensor type. Auto-delete retention lives in
@@ -114,6 +114,7 @@ class LogsActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.nav_logs -> true
                 R.id.nav_home -> { navigateTo(MainActivity::class.java); true }
+                R.id.nav_insights -> { navigateTo(InsightsActivity::class.java); true }
                 R.id.nav_settings -> { navigateTo(SettingsActivity::class.java); true }
                 else -> false
             }

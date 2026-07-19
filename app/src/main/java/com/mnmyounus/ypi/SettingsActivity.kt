@@ -9,17 +9,23 @@ import android.provider.Settings
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.mnmyounus.ypi.data.ForegroundAppResolver
+import com.mnmyounus.ypi.data.IconOption
 import com.mnmyounus.ypi.data.PermissionStatus
 import com.mnmyounus.ypi.data.RetentionPolicy
 import com.mnmyounus.ypi.data.SensorLogStore
+import com.mnmyounus.ypi.data.ThemePreference
 import com.mnmyounus.ypi.databinding.ActivitySettingsBinding
 
 /**
  * SettingsActivity
  *
- * One of YPI's 3 bottom-nav destinations. Holds every configuration
+ * One of YPI's 4 bottom-nav destinations. Holds every configuration
  * surface: the 5 permission steps (overlay, accessibility service,
- * Usage Access, Bluetooth, Location) and the log's auto-delete window.
+ * Usage Access, Bluetooth, Location) — now consolidated into one
+ * bordered section instead of 5 separate cards — plus theme (light/
+ * dark/system), app icon (a fixed set of alternates, see IconOption.kt
+ * for why that's the only mechanism Android actually allows), and the
+ * log's auto-delete window.
  */
 class SettingsActivity : AppCompatActivity() {
 
@@ -39,6 +45,8 @@ class SettingsActivity : AppCompatActivity() {
         usageResolver = ForegroundAppResolver(this)
 
         attachPermissionListeners()
+        setUpThemeChips()
+        setUpIconChips()
         setUpRetentionChips()
         setUpBottomNav()
     }
@@ -84,7 +92,7 @@ class SettingsActivity : AppCompatActivity() {
             setText(if (overlayOk) R.string.granted else R.string.grant)
         }
 
-        b.cardStep2.alpha = if (overlayOk) 1f else 0.38f
+        b.rowStep2.alpha = if (overlayOk) 1f else 0.38f
         b.icStatus2.setImageResource(statusIcon(serviceOk))
         b.btnEnableService.apply {
             isEnabled = overlayOk && !serviceOk
@@ -115,6 +123,47 @@ class SettingsActivity : AppCompatActivity() {
 
     private fun statusIcon(done: Boolean) =
         if (done) R.drawable.ic_check else R.drawable.ic_pending
+
+    // ── Theme ─────────────────────────────────────────────────────
+
+    private fun setUpThemeChips() {
+        updateThemeChipSelection(ThemePreference.get(this))
+        b.chipThemeLight.setOnClickListener  { setTheme(ThemePreference.LIGHT) }
+        b.chipThemeDark.setOnClickListener   { setTheme(ThemePreference.DARK) }
+        b.chipThemeSystem.setOnClickListener { setTheme(ThemePreference.SYSTEM) }
+    }
+
+    private fun setTheme(pref: ThemePreference) {
+        ThemePreference.set(this, pref)
+        pref.apply()   // AppCompatDelegate recreates every visible AppCompatActivity automatically
+        updateThemeChipSelection(pref)
+    }
+
+    private fun updateThemeChipSelection(pref: ThemePreference) {
+        b.chipThemeLight.isChecked  = pref == ThemePreference.LIGHT
+        b.chipThemeDark.isChecked   = pref == ThemePreference.DARK
+        b.chipThemeSystem.isChecked = pref == ThemePreference.SYSTEM
+    }
+
+    // ── App icon ──────────────────────────────────────────────────
+
+    private fun setUpIconChips() {
+        updateIconChipSelection(IconOption.get(this))
+        b.chipIconDefault.setOnClickListener { setIcon(IconOption.DEFAULT) }
+        b.chipIconStealth.setOnClickListener { setIcon(IconOption.STEALTH) }
+        b.chipIconMinimal.setOnClickListener { setIcon(IconOption.MINIMAL) }
+    }
+
+    private fun setIcon(option: IconOption) {
+        IconOption.apply(this, option)
+        updateIconChipSelection(option)
+    }
+
+    private fun updateIconChipSelection(option: IconOption) {
+        b.chipIconDefault.isChecked = option == IconOption.DEFAULT
+        b.chipIconStealth.isChecked = option == IconOption.STEALTH
+        b.chipIconMinimal.isChecked = option == IconOption.MINIMAL
+    }
 
     // ── Retention ─────────────────────────────────────────────────
 
@@ -147,6 +196,7 @@ class SettingsActivity : AppCompatActivity() {
                 R.id.nav_settings -> true
                 R.id.nav_home -> { navigateTo(MainActivity::class.java); true }
                 R.id.nav_logs -> { navigateTo(LogsActivity::class.java); true }
+                R.id.nav_insights -> { navigateTo(InsightsActivity::class.java); true }
                 else -> false
             }
         }

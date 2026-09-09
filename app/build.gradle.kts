@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId = "com.mnmyounus.ypi"
-        minSdk        = 26          // Android 8.0 Oreo — gives us AudioPlaybackCallback
+        minSdk        = 27          // Android 8.1 Oreo MR1 — supports Vivo Y93
         targetSdk     = 35
         versionCode   = 1
         versionName   = "1.0.0"
@@ -44,6 +44,16 @@ android {
     }
     kotlinOptions {
         jvmTarget = "17"
+    }
+
+    // Optimized for Vivo Y93 (ARM64) and other devices
+    splits {
+        abi {
+            isEnable = true
+            reset()
+            include("arm64-v8a", "armeabi-v7a")
+            isUniversalApk = true  // Fallback APK with all ABIs
+        }
     }
 }
 

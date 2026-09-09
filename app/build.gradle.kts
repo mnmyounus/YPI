@@ -11,8 +11,8 @@ android {
         applicationId = "com.mnmyounus.ypi"
         minSdk        = 27          // Android 8.1 Oreo MR1 — supports Vivo Y93
         targetSdk     = 35
-        versionCode   = 1
-        versionName   = "1.0.0"
+        versionCode   = 4
+        versionName   = "1.0.4"
     }
 
     buildTypes {

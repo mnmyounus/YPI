@@ -45,16 +45,6 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
-
-    // Optimized for Vivo Y93 (ARM64) and other devices
-    splits {
-        abi {
-            isEnable = true
-            reset()
-            include("arm64-v8a", "armeabi-v7a")
-            isUniversalApk = true  // Fallback APK with all ABIs
-        }
-    }
 }
 
 dependencies {
